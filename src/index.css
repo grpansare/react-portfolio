@@ -1,0 +1,33 @@
+/* Tailwind CSS directives - suppress IDE warnings */
+/* @tailwind base; @tailwind components; @tailwind utilities; */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-black text-gray-100 px-4 sm:px-6 lg:px-8;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-violet-600 hover:bg-violet-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 inline-flex items-center gap-2 shadow-lg hover:shadow-xl;
+  }
+  
+  .btn-secondary {
+    @apply border-2 border-violet-600 text-violet-600 hover:bg-violet-600 hover:text-white dark:border-violet-400 dark:text-violet-400 dark:hover:bg-violet-600 dark:hover:text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 inline-flex items-center gap-2;
+  }
+  
+  .section-padding {
+    @apply py-16 sm:py-20;
+  }
+  
+  .container-max {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
