@@ -76,7 +76,7 @@ const About = () => {
             className="bg-gray-900 p-4 sm:p-6 md:p-8 rounded-2xl"
           >
             <img 
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face" 
+              src="/profile.jpg" 
               alt="Profile" 
               className="w-full h-48 sm:h-56 md:h-64 object-cover rounded-lg mb-4 sm:mb-6"
             />
