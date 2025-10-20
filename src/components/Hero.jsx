@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react'
+import { ArrowDown, Github, Linkedin, Mail, Download } from 'lucide-react'
 
 const Hero = () => {
   const [currentText, setCurrentText] = useState('')
@@ -44,7 +44,7 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight">
+          <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             Hi, I'm{' '}
             <span className="text-violet-600 dark:text-violet-400">Ganesh Pansare</span>
           </h1>
@@ -79,6 +79,14 @@ const Hero = () => {
           >
             <a href="#projects" className="btn-primary">
               View My Work
+            </a>
+            <a 
+              href="/resume.pdf" 
+              download="Ganesh_Pansare_Resume.pdf"
+              className="btn-secondary"
+            >
+              <Download size={20} />
+              Download Resume
             </a>
             <a href="#contact" className="btn-secondary">
               Get In Touch
