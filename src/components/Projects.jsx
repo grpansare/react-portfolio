@@ -15,7 +15,7 @@ const Projects = () => {
       description: "Comprehensive e-commerce solution for religious products with secure checkout, Razorpay integration, admin dashboard, and complete product management system.",
       image: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=600&h=400&fit=crop",
       technologies: ["Spring Boot", "React.js", "MySQL", "Razorpay"],
-      liveUrl: "#",
+      liveUrl: "https://sacredstore-2.onrender.com/",
       githubUrl: "https://github.com/grpansare/SacredStore"
     },
     {
@@ -23,7 +23,7 @@ const Projects = () => {
       description: "Full-stack parking management system with real-time slot booking, interactive maps, JWT & Google OAuth authentication, and Razorpay payment integration.",
       image: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=600&h=400&fit=crop",
       technologies: ["React.js", "Spring Boot", "MySQL", "Leaflet Maps", "Razorpay"],
-      liveUrl: "#",
+      liveUrl: "",
       githubUrl: "https://github.com/grpansare/smart_car_parking"
     },
     {
@@ -37,7 +37,7 @@ const Projects = () => {
   ]
 
   return (
-    <section id="projects" className="section-padding bg-black">
+    <section id="projects" className="section-padding bg-white dark:bg-black transition-colors duration-300">
       <div className="container-max">
         <motion.div
           ref={ref}
@@ -46,10 +46,10 @@ const Projects = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">
             Featured Projects
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto px-4">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto px-4">
             Here are some of my recent projects that showcase my skills and passion for creating 
             meaningful digital experiences.
           </p>
@@ -62,7 +62,7 @@ const Projects = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: index * 0.2 }}
-              className="bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-xl hover:shadow-violet-500/20 transition-shadow duration-300"
+              className="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-xl hover:shadow-violet-500/20 transition-shadow duration-300"
             >
               <div className="relative group">
                 <img 
@@ -71,15 +71,21 @@ const Projects = () => {
                   className="w-full h-48 object-cover"
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
-                  <a 
-                    href={project.liveUrl}
-                    className="p-2 bg-gray-800 rounded-full hover:bg-gray-700 transition-colors text-gray-200"
-                  >
-                    <ExternalLink size={20} />
-                  </a>
+                  {project.liveUrl && (
+                    <a 
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 bg-white dark:bg-gray-800 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-900 dark:text-gray-200"
+                    >
+                      <ExternalLink size={20} />
+                    </a>
+                  )}
                   <a 
                     href={project.githubUrl}
-                    className="p-2 bg-gray-800 rounded-full hover:bg-gray-700 transition-colors text-gray-200"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 bg-white dark:bg-gray-800 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-900 dark:text-gray-200"
                   >
                     <Github size={20} />
                   </a>
@@ -87,17 +93,17 @@ const Projects = () => {
               </div>
               
               <div className="p-4 sm:p-6">
-                <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
                   {project.title}
                 </h3>
-                <p className="text-sm sm:text-base text-gray-300 mb-3 sm:mb-4">
+                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-3 sm:mb-4">
                   {project.description}
                 </p>
                 <div className="flex flex-wrap gap-1 sm:gap-2">
                   {project.technologies.map((tech, techIndex) => (
                     <span 
                       key={techIndex}
-                      className="px-2 sm:px-3 py-1 bg-violet-900/30 text-violet-300 text-xs sm:text-sm rounded-full"
+                      className="px-2 sm:px-3 py-1 bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 text-xs sm:text-sm rounded-full"
                     >
                       {tech}
                     </span>
