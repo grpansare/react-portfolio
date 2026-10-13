@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { contact } from "../data/profile";
 
 const Contact = () => {
   const [ref, inView] = useInView({
@@ -15,6 +16,8 @@ const Contact = () => {
     message: "",
   });
 
+  const [sent, setSent] = useState(false);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -22,11 +25,15 @@ const Contact = () => {
     });
   };
 
+  // No backend: open the visitor's mail client with the message pre-filled.
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
-    // Reset form
+    const subject = `Portfolio enquiry from ${formData.name}`;
+    const body = `${formData.message}\n\n${formData.name}\n${formData.email}`;
+    window.location.href = `mailto:${contact.email}?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+    setSent(true);
     setFormData({ name: "", email: "", message: "" });
   };
 
@@ -34,20 +41,20 @@ const Contact = () => {
     {
       icon: <Mail className="w-6 h-6" />,
       title: "Email",
-      content: "grpansare2002@example.com",
-      link: "mailto:grpansare2002@example.com",
+      content: contact.email,
+      link: `mailto:${contact.email}`,
     },
     {
       icon: <Phone className="w-6 h-6" />,
       title: "Phone",
-      content: "+91 7499661910",
-      link: "tel:+917499661910",
+      content: contact.phone,
+      link: contact.phoneHref,
     },
     {
       icon: <MapPin className="w-6 h-6" />,
       title: "Location",
-      content: "Pune, India",
-      link: "#",
+      content: contact.location,
+      link: "https://www.google.com/maps/place/Pune,+Maharashtra",
     },
   ];
 
@@ -68,8 +75,8 @@ const Contact = () => {
             Get In Touch
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto px-4">
-            Have a project in mind or just want to chat? I'd love to hear from
-            you. Let's create something amazing together!
+            Open to full-stack and backend opportunities, collaborations, or
+            just a chat about tech. My inbox is always open.
           </p>
         </motion.div>
 
@@ -89,6 +96,10 @@ const Contact = () => {
                 <motion.a
                   key={index}
                   href={info.link}
+                  {...(info.link.startsWith("http") && {
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                  })}
                   initial={{ opacity: 0, y: 20 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.8, delay: 0.4 + index * 0.1 }}
@@ -116,13 +127,13 @@ const Contact = () => {
               className="bg-gray-100 dark:bg-gray-900 p-4 sm:p-6 rounded-lg"
             >
               <h4 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-                Why Work With Me?
+                What I Bring
               </h4>
               <ul className="space-y-1 sm:space-y-2 text-sm sm:text-base text-gray-600 dark:text-gray-300">
-                <li>• Fast response time (usually within 24 hours)</li>
-                <li>• Clear communication throughout the project</li>
-                <li>• Quality code with proper documentation</li>
-                <li>• Post-launch support and maintenance</li>
+                <li>• Production experience as a Software Engineer at humancloud</li>
+                <li>• End-to-end ownership: React/Angular UI to Spring Boot APIs</li>
+                <li>• Microservices, Kafka and Kubernetes hands-on experience</li>
+                <li>• Clean, tested and well-documented code</li>
               </ul>
             </motion.div>
           </motion.div>
@@ -188,7 +199,7 @@ const Contact = () => {
                   required
                   rows={5}
                   className="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors resize-none"
-                  placeholder="Tell me about your project..."
+                  placeholder="Tell me about the role or project..."
                 />
               </div>
 
@@ -199,6 +210,19 @@ const Contact = () => {
                 <Send size={20} />
                 Send Message
               </button>
+              {sent && (
+                <p className="text-sm text-center text-gray-600 dark:text-gray-300" role="status">
+                  Your email app should open with the message ready to send. If
+                  it doesn't, write to{" "}
+                  <a
+                    href={`mailto:${contact.email}`}
+                    className="text-violet-600 dark:text-violet-400 underline"
+                  >
+                    {contact.email}
+                  </a>
+                  .
+                </p>
+              )}
             </form>
           </motion.div>
         </div>

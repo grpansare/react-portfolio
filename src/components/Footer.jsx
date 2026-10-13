@@ -2,6 +2,7 @@ import React from "react";
 import { Github, Linkedin, Mail, Heart } from "lucide-react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { contact } from "../data/profile";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -14,17 +15,17 @@ const Footer = () => {
   const socialLinks = [
     {
       icon: <Github size={20} />,
-      href: "https://github.com/grpansare",
+      href: contact.github,
       label: "GitHub",
     },
     {
       icon: <Linkedin size={20} />,
-      href: "https://linkedin.com/in/ganesh-pansare",
+      href: contact.linkedin,
       label: "LinkedIn",
     },
     {
       icon: <Mail size={20} />,
-      href: "mailto:grpansare2002@example.com",
+      href: `mailto:${contact.email}`,
       label: "Email",
     },
   ];
@@ -32,6 +33,7 @@ const Footer = () => {
   const quickLinks = [
     { name: "Home", href: "#home" },
     { name: "About", href: "#about" },
+    { name: "Experience", href: "#experience" },
     { name: "Projects", href: "#projects" },
     { name: "Skills", href: "#skills" },
     { name: "Contact", href: "#contact" },
@@ -53,8 +55,8 @@ const Footer = () => {
               Ganesh Pansare
             </h3>
             <p className="text-sm sm:text-base text-gray-200 dark:text-gray-300 mb-4 sm:mb-6">
-              MCA 2nd Year Student passionate about full-stack development and
-              creating innovative digital solutions.
+              Junior Software Engineer at humancloud, building scalable
+              full-stack web applications.
             </p>
 
             <div className="flex space-x-3 sm:space-x-4">
@@ -63,6 +65,10 @@ const Footer = () => {
                   key={index}
                   href={link.href}
                   aria-label={link.label}
+                  {...(link.href.startsWith("http") && {
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                  })}
                   className="text-gray-300 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors duration-200"
                   whileHover={{ y: -3, scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -100,9 +106,9 @@ const Footer = () => {
               Get In Touch
             </h4>
             <div className="space-y-1 sm:space-y-2 text-sm sm:text-base text-gray-200 dark:text-gray-300">
-              <p>grpansare2002@example.com</p>
-              <p>+91 7499661910</p>
-              <p>Pune, India</p>
+              <p>{contact.email}</p>
+              <p>{contact.phone}</p>
+              <p>{contact.location}</p>
             </div>
           </div>
         </div>
@@ -110,7 +116,7 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="border-t border-gray-700 dark:border-gray-800 mt-6 sm:mt-8 pt-6 sm:pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-300 dark:text-gray-400 text-xs sm:text-sm">
-            {currentYear} Ganesh Pansare. All rights reserved.
+            © {currentYear} Ganesh Pansare. All rights reserved.
           </p>
           <p className="text-gray-300 dark:text-gray-400 text-xs sm:text-sm flex items-center mt-3 sm:mt-4 md:mt-0">
             Made with <Heart size={16} className="text-red-500 mx-1" /> using

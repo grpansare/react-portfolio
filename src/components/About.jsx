@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Code, Palette, Zap } from "lucide-react";
+import { Server, Layout, Container } from "lucide-react";
 
 const About = () => {
   const [ref, inView] = useInView({
@@ -11,22 +11,22 @@ const About = () => {
 
   const features = [
     {
-      icon: <Code className="w-8 h-8" />,
-      title: "Clean Code",
+      icon: <Server className="w-8 h-8" />,
+      title: "Backend & Microservices",
       description:
-        "Writing maintainable, scalable, and efficient code following best practices.",
+        "REST APIs and microservices with Spring Boot, Spring Cloud, Kafka and secure auth (JWT, OAuth2, Keycloak).",
     },
     {
-      icon: <Palette className="w-8 h-8" />,
-      title: "Modern Design",
+      icon: <Layout className="w-8 h-8" />,
+      title: "Frontend",
       description:
-        "Creating beautiful, intuitive interfaces with attention to user experience.",
+        "Responsive, maintainable interfaces with React, Angular, Redux and Tailwind CSS.",
     },
     {
-      icon: <Zap className="w-8 h-8" />,
-      title: "Performance",
+      icon: <Container className="w-8 h-8" />,
+      title: "DevOps",
       description:
-        "Optimizing applications for speed, accessibility, and cross-platform compatibility.",
+        "Containerised delivery with Docker, Kubernetes and GitOps using ArgoCD.",
     },
   ];
 
@@ -47,10 +47,9 @@ const About = () => {
             About Me
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto px-4">
-            I'm Ganesh Pansare, currently pursuing my MCA (Master of Computer
-            Applications) in my 2nd year. I'm passionate about software
-            development and constantly learning new technologies to build
-            innovative solutions.
+            I'm Ganesh Pansare, a Junior Software Engineer at humancloud in
+            Pune. I build full-stack web applications, with a strong focus on
+            backend systems, clean code and scalable architecture.
           </p>
         </motion.div>
 
@@ -61,20 +60,18 @@ const About = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
-              My Academic Journey
+              My Journey
             </h3>
             <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-4 sm:mb-6">
-              Currently in my 2nd year of MCA, I've been diving deep into
-              programming, software engineering, and modern web technologies. My
-              academic journey has equipped me with strong fundamentals in
-              computer science and practical experience in various programming
-              languages.
+              I completed my MCA at MES' IMCC, Pune, and gained hands-on
+              experience through internships at Secbyte Technologies, working on
+              MySQL, REST APIs and payment gateway integration, and then at
+              humancloud, where I now work full-time.
             </p>
             <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-4 sm:mb-6">
-              I'm actively working on projects to apply my theoretical knowledge
-              and build a strong portfolio. My goal is to become a skilled
-              full-stack developer and contribute to meaningful software
-              projects.
+              Outside work I build systems end to end, from a Kafka-driven
+              microservices task manager deployed with Kubernetes and ArgoCD to
+              full-stack apps with Razorpay payments and OAuth login.
             </p>
             <a href="#contact" className="btn-primary">
               Let's Work Together
@@ -89,7 +86,7 @@ const About = () => {
           >
             <img
               src="/profile.jpg"
-              alt="Profile"
+              alt="Ganesh Pansare"
               className="w-full h-48 sm:h-56 md:h-64 object-cover rounded-lg mb-4 sm:mb-6"
             />
             <div className="text-center">
@@ -97,7 +94,8 @@ const About = () => {
                 Always Learning
               </h4>
               <p className="text-gray-600 dark:text-gray-300">
-                Currently exploring AI/ML integration in web applications
+                IBM-certified in Data Science; exploring AI integration in web
+                applications
               </p>
             </div>
           </motion.div>

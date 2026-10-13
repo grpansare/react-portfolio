@@ -19,6 +19,7 @@ const Navbar = () => {
   const navItems = [
     { name: "Home", href: "#home" },
     { name: "About", href: "#about" },
+    { name: "Experience", href: "#experience" },
     { name: "Projects", href: "#projects" },
     { name: "Skills", href: "#skills" },
     { name: "Contact", href: "#contact" },
@@ -37,9 +38,12 @@ const Navbar = () => {
     >
       <div className="container-max">
         <div className="flex justify-between items-center py-3 sm:py-4">
-          <div className="text-xl sm:text-2xl font-bold text-violet-600 dark:text-violet-400">
-            Portfolio
-          </div>
+          <a
+            href="#home"
+            className="text-xl sm:text-2xl font-bold text-violet-600 dark:text-violet-400"
+          >
+            Ganesh Pansare
+          </a>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
@@ -81,6 +85,8 @@ const Navbar = () => {
             <button
               className="text-gray-700 dark:text-gray-300"
               onClick={() => setIsOpen(!isOpen)}
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen}
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>

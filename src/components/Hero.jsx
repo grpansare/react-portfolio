@@ -1,43 +1,40 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, Github, Linkedin, Mail, Download } from "lucide-react";
+import { contact } from "../data/profile";
+
+const texts = [
+  "Software Engineer",
+  "Full Stack Developer",
+  "Spring Boot & React Developer",
+  "Microservices Enthusiast",
+];
 
 const Hero = () => {
   const [currentText, setCurrentText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const texts = [
-    "MCA Student",
-    "Full Stack Developer",
-    "Problem Solver",
-    "Tech Enthusiast",
-    "Future Software Engineer",
-  ];
-
   useEffect(() => {
-    const timeout = setTimeout(
-      () => {
-        const current = texts[currentIndex];
+    const current = texts[currentIndex];
+    let delay = isDeleting ? 50 : 100;
+    if (!isDeleting && currentText === current) delay = 2000;
 
-        if (isDeleting) {
-          setCurrentText(current.substring(0, currentText.length - 1));
-        } else {
-          setCurrentText(current.substring(0, currentText.length + 1));
-        }
-
-        if (!isDeleting && currentText === current) {
-          setTimeout(() => setIsDeleting(true), 2000);
-        } else if (isDeleting && currentText === "") {
-          setIsDeleting(false);
-          setCurrentIndex((prevIndex) => (prevIndex + 1) % texts.length);
-        }
-      },
-      isDeleting ? 50 : 100
-    );
+    const timeout = setTimeout(() => {
+      if (!isDeleting && currentText === current) {
+        setIsDeleting(true);
+      } else if (isDeleting && currentText === "") {
+        setIsDeleting(false);
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % texts.length);
+      } else {
+        setCurrentText(
+          current.substring(0, currentText.length + (isDeleting ? -1 : 1))
+        );
+      }
+    }, delay);
 
     return () => clearTimeout(timeout);
-  }, [currentText, currentIndex, isDeleting, texts]);
+  }, [currentText, currentIndex, isDeleting]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -68,7 +65,6 @@ const Hero = () => {
       scale: 1.05,
       boxShadow: "0 0 15px rgba(139, 92, 246, 0.6)",
       transition: {
-        yoyo: Infinity,
         duration: 0.3,
       },
     },
@@ -129,8 +125,8 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-6 sm:mb-8 max-w-3xl mx-auto px-4"
           >
-            Passionate about full-stack development and creating innovative
-            digital solutions. Eager to learn and build impactful applications.
+            Junior Software Engineer at humancloud, building scalable web apps
+            with React, Angular, Spring Boot and microservices.
           </motion.p>
 
           <motion.div
@@ -147,7 +143,7 @@ const Hero = () => {
               View My Work
             </motion.a>
             <motion.a
-              href="/resume.pdf"
+              href={contact.resume}
               download="Ganesh_Pansare_Resume.pdf"
               variants={buttonVariants}
               whileHover="hover"
@@ -194,17 +190,17 @@ const Hero = () => {
             {[
               {
                 icon: <Github className="w-8 h-8 sm:w-10 sm:h-10" />,
-                href: "https://github.com/grpansare",
+                href: contact.github,
                 label: "GitHub",
               },
               {
                 icon: <Linkedin className="w-8 h-8 sm:w-10 sm:h-10" />,
-                href: "https://linkedin.com/in/ganesh-pansare",
+                href: contact.linkedin,
                 label: "LinkedIn",
               },
               {
                 icon: <Mail className="w-8 h-8 sm:w-10 sm:h-10" />,
-                href: "mailto:ganesh.pansare@example.com",
+                href: `mailto:${contact.email}`,
                 label: "Email",
               },
             ].map((social, index) => (
@@ -237,6 +233,7 @@ const Hero = () => {
           >
             <a
               href="#about"
+              aria-label="Scroll to About section"
               className="text-violet-600 dark:text-violet-400 inline-block"
             >
               <ArrowDown size={32} />

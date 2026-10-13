@@ -1,10 +1,33 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>portfolio</title>
+    <title>Ganesh Pansare | Software Engineer</title>
+    <meta
+      name="description"
+      content="Ganesh Pansare - Junior Software Engineer at humancloud, Pune. Full stack developer working with React, Angular, Spring Boot, microservices, Kafka and Kubernetes."
+    />
+    <meta name="author" content="Ganesh Pansare" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Ganesh Pansare | Software Engineer" />
+    <meta
+      property="og:description"
+      content="Full stack developer: React, Angular, Spring Boot, microservices. See my projects, experience and certifications."
+    />
+    <meta property="og:image" content="/profile.jpg" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="theme-color" content="#7c3aed" />
+    <script>
+      // Apply the theme before first paint so there is no flash.
+      (function () {
+        var saved = null;
+        try { saved = localStorage.getItem("theme"); } catch (e) {}
+        var dark = saved ? saved === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.classList.toggle("dark", dark);
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
