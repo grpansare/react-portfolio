@@ -9,49 +9,66 @@ export const contact = {
   resume: "/resume.pdf",
 };
 
+// Grouped by company; roles listed newest first.
 export const experience = [
   {
-    role: "Junior Software Engineer",
     company: "humancloud",
-    type: "Full-time · On-site",
-    period: "Jul 2026 – Present",
-    location: "Pune",
-    points: [
-      "Building and shipping full-stack features for production web applications.",
+    location: "Pune · On-site",
+    roles: [
+      {
+        title: "Junior Software Engineer",
+        type: "Full-time",
+        period: "Jul 2026 – Present",
+        points: [
+          "Building and shipping full-stack features for production web applications.",
+        ],
+      },
+      {
+        title: "Software Development Intern",
+        type: "Internship",
+        period: "Dec 2025 – Jun 2026",
+        points: [
+          "Worked on frontend and backend modules; converted to a full-time role.",
+        ],
+      },
     ],
   },
   {
-    role: "Software Development Intern",
-    company: "humancloud",
-    type: "Internship · On-site",
-    period: "Dec 2025 – Jun 2026",
-    location: "Pune",
-    points: [
-      "Worked on frontend and backend modules; converted to a full-time role.",
-    ],
-  },
-  {
-    role: "Full Stack Developer Intern",
     company: "Secbyte Technologies",
-    type: "Internship · Remote",
-    period: "Jun 2025 – Sep 2025",
-    location: "Pune",
-    points: [
-      "Developed REST APIs backed by MySQL.",
-      "Integrated a payment gateway into the product's checkout flow.",
+    location: "Pune · Remote",
+    roles: [
+      {
+        title: "Full Stack Developer Intern",
+        type: "Internship",
+        period: "Jun 2025 – Sep 2025",
+        points: [
+          "Developed REST APIs backed by MySQL.",
+          "Integrated a payment gateway into the product's checkout flow.",
+        ],
+      },
     ],
   },
   {
-    role: "Java & Web Development Intern",
     company: "Innovixion Tech · CodSoft",
-    type: "Virtual Internships",
-    period: "2024",
     location: "Remote",
-    points: [
-      "Built an Online Examination System with Spring Boot and JSP.",
-      "Completed Java programming tasks and a personal portfolio site.",
+    roles: [
+      {
+        title: "Java & Web Development Intern",
+        type: "Virtual internships",
+        period: "2024",
+        points: [
+          "Built an Online Examination System with Spring Boot and JSP.",
+          "Completed Java programming tasks and a personal portfolio site.",
+        ],
+      },
     ],
   },
+];
+
+export const stats = [
+  { value: "1+ yr", label: "Industry experience" },
+  { value: "4", label: "Internships" },
+  { value: "5", label: "Certifications" },
 ];
 
 export const education = [

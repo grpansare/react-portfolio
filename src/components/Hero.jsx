@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowDown, Github, Linkedin, Mail, Download } from "lucide-react";
-import { contact } from "../data/profile";
+import { ArrowRight, Github, Linkedin, Mail, Download } from "lucide-react";
+import { contact, stats } from "../data/profile";
 
 const texts = [
   "Software Engineer",
@@ -17,7 +17,7 @@ const Hero = () => {
 
   useEffect(() => {
     const current = texts[currentIndex];
-    let delay = isDeleting ? 50 : 100;
+    let delay = isDeleting ? 40 : 80;
     if (!isDeleting && currentText === current) delay = 2000;
 
     const timeout = setTimeout(() => {
@@ -36,209 +36,143 @@ const Hero = () => {
     return () => clearTimeout(timeout);
   }, [currentText, currentIndex, isDeleting]);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3,
-      },
-    },
-  };
+  const fadeUp = (delay) => ({
+    initial: { opacity: 0, y: 16 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.45, delay, ease: "easeOut" },
+  });
 
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 10,
-      },
-    },
-  };
-
-  const buttonVariants = {
-    hover: {
-      scale: 1.05,
-      boxShadow: "0 0 15px rgba(139, 92, 246, 0.6)",
-      transition: {
-        duration: 0.3,
-      },
-    },
-    tap: {
-      scale: 0.95,
-    },
-  };
+  const socials = [
+    { icon: Github, href: contact.github, label: "GitHub" },
+    { icon: Linkedin, href: contact.linkedin, label: "LinkedIn" },
+    { icon: Mail, href: `mailto:${contact.email}`, label: "Email" },
+  ];
 
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center bg-white dark:bg-black px-4 sm:px-6 lg:px-8 overflow-hidden transition-colors duration-300"
+      className="relative section-base overflow-hidden pt-28 pb-20 sm:pt-36 sm:pb-24"
     >
-      <div className="container-max text-center">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={containerVariants}
-          className="space-y-6"
-        >
+      <div className="hero-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+      <div
+        className="pointer-events-none absolute -top-40 right-0 h-96 w-96 rounded-full bg-violet-500/20 blur-3xl dark:bg-violet-600/20"
+        aria-hidden="true"
+      />
+
+      <div className="container-max relative grid items-center gap-12 lg:grid-cols-[1.4fr_1fr]">
+        <div>
+          <motion.a
+            {...fadeUp(0)}
+            href="#experience"
+            className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white/70 px-3 py-1.5 text-sm text-gray-700 backdrop-blur dark:border-white/10 dark:bg-white/5 dark:text-gray-300"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75 motion-reduce:animate-none" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+            </span>
+            Currently @ humancloud
+          </motion.a>
+
           <motion.h1
-            variants={itemVariants}
-            className="text-3xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 dark:text-white leading-tight"
+            {...fadeUp(0.05)}
+            className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] text-gray-900 dark:text-white"
           >
             Hi, I'm{" "}
-            <motion.span
-              className="text-violet-600 dark:text-violet-400 inline-block"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
+            <span className="bg-gradient-to-r from-violet-600 to-indigo-500 bg-clip-text text-transparent dark:from-violet-400 dark:to-indigo-300">
               Ganesh Pansare
-            </motion.span>
+            </span>
           </motion.h1>
 
-          <motion.div
-            variants={itemVariants}
-            className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold text-gray-600 dark:text-gray-300 mb-6 sm:mb-8 flex items-baseline justify-center gap-2"
+          {/* Fixed height so the typing animation never shifts the layout */}
+          <motion.p
+            {...fadeUp(0.1)}
+            className="mt-4 h-9 sm:h-10 font-mono text-xl sm:text-2xl text-gray-700 dark:text-gray-300"
           >
-            <span className="text-gray-900 dark:text-white">I'm a</span>
-            <span className="text-xl sm:text-2xl md:text-3xl text-gray-600 dark:text-gray-300 inline-block">
+            <span className="sr-only">Software Engineer and Full Stack Developer</span>
+            <span aria-hidden="true">
+              <span className="text-violet-600 dark:text-violet-400">&gt;</span>{" "}
               {currentText}
-              <motion.span
-                animate={{ opacity: [1, 0] }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 1,
-                  repeatType: "reverse",
-                }}
-              >
-                |
-              </motion.span>
+              <span className="ml-0.5 inline-block w-[2px] h-6 align-middle bg-violet-600 dark:bg-violet-400 animate-pulse motion-reduce:animate-none" />
             </span>
-          </motion.div>
+          </motion.p>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-6 sm:mb-8 max-w-3xl mx-auto px-4"
+            {...fadeUp(0.15)}
+            className="mt-6 max-w-xl text-lg text-gray-600 dark:text-gray-400"
           >
             Junior Software Engineer at humancloud, building scalable web apps
             with React, Angular, Spring Boot and microservices.
           </motion.p>
 
-          <motion.div
-            variants={itemVariants}
-            className="flex flex-wrap justify-center gap-4 sm:gap-6"
-          >
-            <motion.a
-              href="#projects"
-              variants={buttonVariants}
-              whileHover="hover"
-              whileTap="tap"
-              className="px-6 py-3 sm:px-8 sm:py-4 bg-violet-600 hover:bg-violet-700 text-white font-medium rounded-full transition-colors flex items-center gap-2 group shadow-lg"
-            >
+          <motion.div {...fadeUp(0.2)} className="mt-8 flex flex-wrap items-center gap-3">
+            <a href="#projects" className="btn-primary">
               View My Work
-            </motion.a>
-            <motion.a
+              <ArrowRight size={18} />
+            </a>
+            <a href="#contact" className="btn-outline">
+              Get In Touch
+            </a>
+            <a
               href={contact.resume}
               download="Ganesh_Pansare_Resume.pdf"
-              variants={buttonVariants}
-              whileHover="hover"
-              whileTap="tap"
-              className="px-6 py-3 sm:px-8 sm:py-4 bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-900 dark:text-white font-medium rounded-full transition-colors flex items-center gap-2 group shadow-lg"
+              className="inline-flex items-center gap-1.5 px-2 py-3 font-medium text-gray-700 underline-offset-4 hover:text-violet-700 hover:underline dark:text-gray-300 dark:hover:text-violet-300"
             >
-              Download Resume
-              <motion.span
-                animate={{ y: [0, -2, 0] }}
-                transition={{
-                  duration: 1.2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              >
-                <Download className="w-5 h-5" />
-              </motion.span>
-            </motion.a>
-            <motion.a
-              href="#contact"
-              variants={buttonVariants}
-              whileHover="hover"
-              whileTap="tap"
-              className="px-6 py-3 sm:px-8 sm:py-4 bg-violet-600 hover:bg-violet-700 text-white font-medium rounded-full transition-colors flex items-center gap-2 group shadow-lg"
-            >
-              Get In Touch
-              <motion.span
-                animate={{ y: [0, 5, 0] }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              >
-                <ArrowDown className="w-5 h-5" />
-              </motion.span>
-            </motion.a>
+              <Download size={16} />
+              Resume
+            </a>
           </motion.div>
 
-          <motion.div
-            variants={containerVariants}
-            className="mt-12 sm:mt-16 flex justify-center space-x-6"
-          >
-            {[
-              {
-                icon: <Github className="w-8 h-8 sm:w-10 sm:h-10" />,
-                href: contact.github,
-                label: "GitHub",
-              },
-              {
-                icon: <Linkedin className="w-8 h-8 sm:w-10 sm:h-10" />,
-                href: contact.linkedin,
-                label: "LinkedIn",
-              },
-              {
-                icon: <Mail className="w-8 h-8 sm:w-10 sm:h-10" />,
-                href: `mailto:${contact.email}`,
-                label: "Email",
-              },
-            ].map((social, index) => (
-              <motion.a
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
-                aria-label={social.label}
-                variants={itemVariants}
-                whileHover={{
-                  y: -5,
-                  scale: 1.1,
-                  color: "rgb(139, 92, 246)",
-                }}
-                whileTap={{ scale: 0.9 }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          <motion.div {...fadeUp(0.25)} className="mt-8 flex items-center gap-2">
+            {socials.map(({ icon: Icon, href, label }) => (
+              <a
+                key={label}
+                href={href}
+                {...(href.startsWith("http") && {
+                  target: "_blank",
+                  rel: "noopener noreferrer",
+                })}
+                className="rounded-lg p-2.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-white"
+                aria-label={label}
               >
-                {social.icon}
-              </motion.a>
+                <Icon size={22} />
+              </a>
             ))}
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1 }}
-            className="animate-bounce mt-8"
+          <motion.dl
+            {...fadeUp(0.3)}
+            className="mt-10 grid max-w-md grid-cols-3 gap-4 border-t border-gray-200 pt-6 dark:border-white/10"
           >
-            <a
-              href="#about"
-              aria-label="Scroll to About section"
-              className="text-violet-600 dark:text-violet-400 inline-block"
-            >
-              <ArrowDown size={32} />
-            </a>
-          </motion.div>
+            {stats.map((stat) => (
+              <div key={stat.label} className="flex flex-col">
+                <dt className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                  {stat.label}
+                </dt>
+                <dd className="order-first font-display text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
+                  {stat.value}
+                </dd>
+              </div>
+            ))}
+          </motion.dl>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="mx-auto w-full max-w-xs sm:max-w-sm"
+        >
+          <div className="relative">
+            <div
+              className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-violet-500/40 to-indigo-500/10 blur-xl"
+              aria-hidden="true"
+            />
+            <img
+              src="/profile.jpg"
+              alt="Ganesh Pansare"
+              className="relative aspect-[4/5] w-full rounded-[1.75rem] border border-white/20 object-cover shadow-2xl"
+            />
+          </div>
         </motion.div>
       </div>
     </section>

@@ -1,130 +1,78 @@
 import React from "react";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
 import { Server, Layout, Container } from "lucide-react";
+import { Reveal, SectionHeader } from "./ui";
 
-const About = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
+const focusAreas = [
+  {
+    icon: Server,
+    title: "Backend & Microservices",
+    description:
+      "REST APIs and microservices with Spring Boot, Spring Cloud, Kafka and secure auth (JWT, OAuth2, Keycloak).",
+  },
+  {
+    icon: Layout,
+    title: "Frontend",
+    description:
+      "Responsive, maintainable interfaces with React, Angular, Redux and Tailwind CSS.",
+  },
+  {
+    icon: Container,
+    title: "DevOps",
+    description:
+      "Containerised delivery with Docker, Kubernetes and GitOps using ArgoCD.",
+  },
+];
 
-  const features = [
-    {
-      icon: <Server className="w-8 h-8" />,
-      title: "Backend & Microservices",
-      description:
-        "REST APIs and microservices with Spring Boot, Spring Cloud, Kafka and secure auth (JWT, OAuth2, Keycloak).",
-    },
-    {
-      icon: <Layout className="w-8 h-8" />,
-      title: "Frontend",
-      description:
-        "Responsive, maintainable interfaces with React, Angular, Redux and Tailwind CSS.",
-    },
-    {
-      icon: <Container className="w-8 h-8" />,
-      title: "DevOps",
-      description:
-        "Containerised delivery with Docker, Kubernetes and GitOps using ArgoCD.",
-    },
-  ];
+const About = () => (
+  <section id="about" className="section-padding section-alt">
+    <div className="container-max">
+      <SectionHeader index="01" title="About" />
 
-  return (
-    <section
-      id="about"
-      className="section-padding bg-gray-50 dark:bg-black transition-colors duration-300"
-    >
-      <div className="container-max">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">
-            About Me
-          </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto px-4">
-            I'm Ganesh Pansare, a Junior Software Engineer at humancloud in
-            Pune. I build full-stack web applications, with a strong focus on
+      <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+        <Reveal className="space-y-5 text-base sm:text-lg leading-relaxed text-gray-600 dark:text-gray-300">
+          <p>
+            I'm a{" "}
+            <strong className="font-semibold text-gray-900 dark:text-white">
+              Junior Software Engineer at humancloud
+            </strong>{" "}
+            in Pune. I build full-stack web applications, with a strong focus on
             backend systems, clean code and scalable architecture.
           </p>
-        </motion.div>
+          <p>
+            I completed my MCA at MES' IMCC, Pune, and gained hands-on
+            experience through internships at Secbyte Technologies, working on
+            MySQL, REST APIs and payment gateway integration, and then at
+            humancloud, where I now work full-time.
+          </p>
+          <p>
+            Outside work I build systems end to end, from a Kafka-driven
+            microservices task manager deployed with Kubernetes and ArgoCD to
+            full-stack apps with Razorpay payments and OAuth login. I'm
+            IBM-certified in Data Science and exploring AI integration in web
+            applications.
+          </p>
+        </Reveal>
 
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center mb-12 md:mb-16">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
-              My Journey
-            </h3>
-            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-4 sm:mb-6">
-              I completed my MCA at MES' IMCC, Pune, and gained hands-on
-              experience through internships at Secbyte Technologies, working on
-              MySQL, REST APIs and payment gateway integration, and then at
-              humancloud, where I now work full-time.
-            </p>
-            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-4 sm:mb-6">
-              Outside work I build systems end to end, from a Kafka-driven
-              microservices task manager deployed with Kubernetes and ArgoCD to
-              full-stack apps with Razorpay payments and OAuth login.
-            </p>
-            <a href="#contact" className="btn-primary">
-              Let's Work Together
-            </a>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="bg-white dark:bg-gray-900 p-4 sm:p-6 md:p-8 rounded-2xl shadow-lg"
-          >
-            <img
-              src="/profile.jpg"
-              alt="Ganesh Pansare"
-              className="w-full h-48 sm:h-56 md:h-64 object-cover rounded-lg mb-4 sm:mb-6"
-            />
-            <div className="text-center">
-              <h4 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                Always Learning
-              </h4>
-              <p className="text-gray-600 dark:text-gray-300">
-                IBM-certified in Data Science; exploring AI integration in web
-                applications
-              </p>
-            </div>
-          </motion.div>
-        </div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.6 + index * 0.1 }}
-              className="text-center p-4 sm:p-6 bg-white dark:bg-gray-900 rounded-xl shadow-md hover:shadow-lg hover:shadow-violet-500/20 dark:hover:shadow-violet-500/10 transition-shadow duration-300"
-            >
-              <div className="text-violet-600 dark:text-violet-400 mb-4 flex justify-center">
-                {feature.icon}
+        <div className="space-y-4">
+          {focusAreas.map(({ icon: Icon, title, description }, index) => (
+            <Reveal key={title} delay={index * 0.06} className="card flex gap-4 p-5">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-violet-100 text-violet-700 dark:bg-violet-400/10 dark:text-violet-300">
+                <Icon size={22} />
               </div>
-              <h4 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
-                {feature.title}
-              </h4>
-              <p className="text-gray-600 dark:text-gray-300">
-                {feature.description}
-              </p>
-            </motion.div>
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  {title}
+                </h3>
+                <p className="mt-1 text-sm sm:text-base text-gray-600 dark:text-gray-400">
+                  {description}
+                </p>
+              </div>
+            </Reveal>
           ))}
         </div>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 export default About;

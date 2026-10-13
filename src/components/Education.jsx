@@ -1,91 +1,63 @@
 import React from "react";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
 import { GraduationCap, Award } from "lucide-react";
 import { education, certifications } from "../data/profile";
+import { Reveal, SectionHeader } from "./ui";
 
-const Education = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
+const Education = () => (
+  <section id="education" className="section-padding section-alt">
+    <div className="container-max">
+      <SectionHeader index="05" title="Education" />
 
-  return (
-    <section
-      id="education"
-      className="section-padding bg-gray-50 dark:bg-black transition-colors duration-300"
-    >
-      <div className="container-max">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">
-            Education & Certifications
-          </h2>
-        </motion.div>
+      <div className="grid gap-6 lg:grid-cols-[1fr_2fr]">
+        {education.map((edu) => (
+          <Reveal key={edu.degree} className="card p-6 sm:p-7">
+            <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-violet-100 text-violet-700 dark:bg-violet-400/10 dark:text-violet-300">
+              <GraduationCap size={22} />
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+              {edu.degree}
+            </h3>
+            <p className="mt-2 text-gray-600 dark:text-gray-400">{edu.school}</p>
+            <p className="mt-3 font-mono text-sm text-violet-700 dark:text-violet-300">
+              {edu.period}
+            </p>
+          </Reveal>
+        ))}
 
-        <div className="grid lg:grid-cols-3 gap-6 md:gap-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="lg:col-span-1 space-y-4"
-          >
-            {education.map((edu) => (
-              <div
-                key={edu.degree}
-                className="bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-xl shadow-lg h-full"
-              >
-                <div className="text-violet-600 dark:text-violet-400 mb-4">
-                  <GraduationCap className="w-8 h-8" />
-                </div>
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                  {edu.degree}
-                </h3>
-                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-2">
-                  {edu.school}
-                </p>
-                <p className="text-sm text-violet-600 dark:text-violet-400 font-medium">
-                  {edu.period}
-                </p>
-              </div>
-            ))}
-          </motion.div>
-
-          <div className="lg:col-span-2 grid sm:grid-cols-2 gap-4">
-            {certifications.map((cert, index) => (
-              <motion.div
-                key={cert.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-                className="flex gap-3 bg-white dark:bg-gray-900 p-4 rounded-xl shadow-md"
-              >
-                <Award className="w-6 h-6 shrink-0 text-violet-600 dark:text-violet-400" />
-                <div>
-                  <h4 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">
-                    {cert.name}
-                  </h4>
-                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">
-                    {cert.issuer} · {cert.date}
-                  </p>
-                  {cert.credentialId && (
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      Credential ID: {cert.credentialId}
+        <Reveal delay={0.06} className="card p-6 sm:p-7">
+          <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
+            Certifications
+          </h3>
+          <ul className="divide-y divide-gray-200 dark:divide-white/10">
+            {certifications.map((cert) => (
+              <li key={cert.name} className="flex gap-3 py-3.5">
+                <Award
+                  size={20}
+                  className="mt-0.5 shrink-0 text-violet-600 dark:text-violet-400"
+                />
+                <div className="flex-1 sm:flex sm:items-baseline sm:justify-between sm:gap-4">
+                  <div>
+                    <p className="font-medium text-gray-900 dark:text-white">
+                      {cert.name}
                     </p>
-                  )}
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      {cert.issuer}
+                      {cert.credentialId && (
+                        <span className="font-mono"> · ID {cert.credentialId}</span>
+                      )}
+                    </p>
+                  </div>
+                  <span className="font-mono text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                    {cert.date}
+                  </span>
                 </div>
-              </motion.div>
+              </li>
             ))}
-          </div>
-        </div>
+          </ul>
+        </Reveal>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 export default Education;

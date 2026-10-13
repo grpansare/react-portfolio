@@ -7,7 +7,18 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['"Space Grotesk"', 'Inter', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+      },
       colors: {
+        ink: {
+          950: '#0a0a10',
+          900: '#101018',
+          800: '#171722',
+          700: '#22222f',
+        },
         primary: {
           50: '#f3f4f6',
           100: '#e5e7eb',

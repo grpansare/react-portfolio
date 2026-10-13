@@ -1,75 +1,64 @@
 import React from "react";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { Briefcase } from "lucide-react";
 import { experience } from "../data/profile";
+import { Reveal, SectionHeader } from "./ui";
 
-const Experience = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
+const Experience = () => (
+  <section id="experience" className="section-padding section-base">
+    <div className="container-max">
+      <SectionHeader
+        index="02"
+        title="Experience"
+        subtitle="Where I've been building software professionally."
+      />
 
-  return (
-    <section
-      id="experience"
-      className="section-padding bg-white dark:bg-black transition-colors duration-300"
-    >
-      <div className="container-max">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">
-            Experience
-          </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto px-4">
-            Where I've been building software professionally.
-          </p>
-        </motion.div>
+      <div className="space-y-6">
+        {experience.map((job, index) => (
+          <Reveal
+            key={job.company}
+            delay={index * 0.05}
+            className="card grid gap-4 p-6 sm:p-8 md:grid-cols-[200px_1fr] md:gap-8"
+          >
+            <div>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                {job.company}
+              </h3>
+              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                {job.location}
+              </p>
+            </div>
 
-        <ol className="relative max-w-3xl mx-auto border-l-2 border-violet-200 dark:border-violet-900">
-          {experience.map((job, index) => (
-            <motion.li
-              key={`${job.company}-${job.role}`}
-              initial={{ opacity: 0, x: -20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-              className="mb-10 ml-6 sm:ml-8 last:mb-0"
-            >
-              <span className="absolute -left-[13px] flex items-center justify-center w-6 h-6 rounded-full bg-violet-600 dark:bg-violet-500 text-white ring-4 ring-white dark:ring-black">
-                <Briefcase size={12} />
-              </span>
-              <div className="bg-gray-50 dark:bg-gray-900 p-4 sm:p-6 rounded-xl shadow-md">
-                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
-                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white">
-                    {job.role}
-                  </h3>
-                  <span className="text-sm text-violet-600 dark:text-violet-400 font-medium whitespace-nowrap">
-                    {job.period}
-                  </span>
-                </div>
-                <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 font-medium">
-                  {job.company}
-                </p>
-                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-3">
-                  {job.type} · {job.location}
-                </p>
-                <ul className="list-disc pl-5 space-y-1 text-sm sm:text-base text-gray-600 dark:text-gray-300">
-                  {job.points.map((point) => (
-                    <li key={point}>{point}</li>
-                  ))}
-                </ul>
-              </div>
-            </motion.li>
-          ))}
-        </ol>
+            {/* Roles at the same company form a mini timeline */}
+            <ol className="relative space-y-6 border-l border-gray-200 pl-6 dark:border-white/10">
+              {job.roles.map((role) => (
+                <li key={role.title} className="relative">
+                  <span
+                    className="absolute -left-[29px] top-1.5 h-2.5 w-2.5 rounded-full bg-violet-600 ring-4 ring-white dark:bg-violet-400 dark:ring-ink-800"
+                    aria-hidden="true"
+                  />
+                  <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      {role.title}
+                    </h4>
+                    <span className="font-mono text-sm text-violet-700 dark:text-violet-300 whitespace-nowrap">
+                      {role.period}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    {role.type}
+                  </p>
+                  <ul className="mt-3 list-disc space-y-1 pl-5 text-gray-600 dark:text-gray-300 marker:text-violet-500">
+                    {role.points.map((point) => (
+                      <li key={point}>{point}</li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
+        ))}
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 export default Experience;
