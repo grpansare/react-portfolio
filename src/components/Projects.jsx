@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { ExternalLink, Github, Layers } from "lucide-react";
 import { Reveal, SectionHeader } from "./ui";
 
@@ -8,7 +8,7 @@ const projects = [
     subtitle: "Distributed Task Management",
     description:
       "JIRA-style task manager built as 7+ Spring Boot microservices behind an API Gateway with Eureka discovery. Kanban boards, Keycloak IAM with RBAC and Google/GitHub social login, and Kafka-driven notifications. Deployed on Kubernetes via ArgoCD (GitOps).",
-    note: "Team project",
+    note: "Team project · humancloud training",
     image: "",
     technologies: ["Spring Boot", "Microservices", "Keycloak", "Kafka", "Docker", "Kubernetes", "ArgoCD"],
     liveUrl: "",

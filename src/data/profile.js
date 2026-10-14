@@ -20,7 +20,9 @@ export const experience = [
         type: "Full-time",
         period: "Jul 2026 – Present",
         points: [
-          "Building and shipping full-stack features for production web applications.",
+          "Built ITIL-aligned features for an IT service management product: workflow automation, major-incident and problem/change management, a service catalog with approvals, knowledge-base governance and PDF reporting.",
+          "Shipped HubSpot, Salesforce and Freshsales CRM integrations and branded customer emails for an AI meeting-transcription SaaS; made its Zoom/Meet recording bot more reliable (Playwright, BullMQ).",
+          "Improved production readiness across services: security-audit fixes, Jest test suites, strict typing and CI/Kubernetes fixes; delivered AI-assisted bulk import for an IT asset management product.",
         ],
       },
       {
@@ -28,7 +30,9 @@ export const experience = [
         type: "Internship",
         period: "Dec 2025 – Jun 2026",
         points: [
-          "Worked on frontend and backend modules; converted to a full-time role.",
+          "One of the main contributors to an AI meeting-transcription SaaS from launch: NestJS/Prisma backend, Next.js frontend, and integration with shared auth, licensing and notification services.",
+          "Co-developed an AI document-generation tool (Angular SSR) and delivered frontend features for a wealth-management app and a talent-matching proof of concept.",
+          "Built services for TaskFlow, a Java microservices task manager with an API gateway and Docker; converted to a full-time role.",
         ],
       },
     ],

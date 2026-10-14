@@ -45,9 +45,10 @@ const About = () => (
             humancloud, where I now work full-time.
           </p>
           <p>
-            Outside work I build systems end to end, from a Kafka-driven
-            microservices task manager deployed with Kubernetes and ArgoCD to
-            full-stack apps with Razorpay payments and OAuth login. I'm
+            At humancloud I work across multi-tenant SaaS products, from AI
+            meeting transcription to IT service management, using NestJS,
+            Next.js and Spring Boot. On my own I've built full-stack apps with
+            Razorpay payments and OAuth login. I'm
             IBM-certified in Data Science and exploring AI integration in web
             applications.
           </p>
