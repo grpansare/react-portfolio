@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Github, Linkedin, Mail, Download } from "lucide-react";
 import { contact, stats } from "../data/profile";
+import { useTheme } from "../context/ThemeContext";
+
+// three.js is large; load it after first paint so the page appears instantly.
+const HeroScene = lazy(() => import("./HeroScene"));
 
 const texts = [
   "Software Engineer",
@@ -14,6 +18,19 @@ const Hero = () => {
   const [currentText, setCurrentText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+  const { theme } = useTheme();
+  const reduceMotion = useReducedMotion();
+  const sectionRef = useRef(null);
+  const [inView, setInView] = useState(true);
+
+  // Pause the WebGL render loop while the hero is scrolled out of view.
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) =>
+      setInView(entry.isIntersecting)
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const current = texts[currentIndex];
@@ -51,9 +68,17 @@ const Hero = () => {
   return (
     <section
       id="home"
+      ref={sectionRef}
       className="relative section-base overflow-hidden pt-28 pb-20 sm:pt-36 sm:pb-24"
     >
       <div className="hero-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+      {!reduceMotion && (
+        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <Suspense fallback={null}>
+            <HeroScene dark={theme === "dark"} active={inView} eventSource={sectionRef} />
+          </Suspense>
+        </div>
+      )}
       <div
         className="pointer-events-none absolute -top-40 right-0 h-96 w-96 rounded-full bg-violet-500/20 blur-3xl dark:bg-violet-600/20"
         aria-hidden="true"
@@ -78,7 +103,7 @@ const Hero = () => {
             className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] text-gray-900 dark:text-white"
           >
             Hi, I'm{" "}
-            <span className="bg-gradient-to-r from-violet-600 to-indigo-500 bg-clip-text text-transparent dark:from-violet-400 dark:to-indigo-300">
+            <span className="animate-gradient bg-[length:200%_auto] bg-gradient-to-r from-violet-600 via-fuchsia-500 to-violet-600 bg-clip-text text-transparent motion-reduce:animate-none dark:from-violet-400 dark:via-fuchsia-300 dark:to-violet-400">
               Ganesh Pansare
             </span>
           </motion.h1>

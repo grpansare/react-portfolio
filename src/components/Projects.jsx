@@ -1,6 +1,6 @@
 ﻿import React from "react";
 import { ExternalLink, Github, Layers } from "lucide-react";
-import { Reveal, SectionHeader } from "./ui";
+import { Reveal, SectionHeader, TiltCard } from "./ui";
 
 const projects = [
   {
@@ -113,13 +113,15 @@ const Projects = () => (
           <Reveal
             key={project.title}
             delay={(index % 2) * 0.06}
-            as="article"
-            className={`card flex overflow-hidden ${
-              project.featured
-                ? "flex-col md:col-span-2 md:flex-row lg:col-span-3"
-                : "flex-col"
-            }`}
+            className={project.featured ? "md:col-span-2 lg:col-span-3" : ""}
           >
+            <TiltCard
+              as="article"
+              max={project.featured ? 3 : 6}
+              className={`card flex h-full overflow-hidden ${
+                project.featured ? "flex-col md:flex-row" : "flex-col"
+              }`}
+            >
             <ProjectImage
               project={project}
               className={
@@ -152,6 +154,7 @@ const Projects = () => (
               </ul>
               <ProjectLinks project={project} />
             </div>
+            </TiltCard>
           </Reveal>
         ))}
       </div>

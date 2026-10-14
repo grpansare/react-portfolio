@@ -10,12 +10,16 @@ import Skills from "./components/Skills";
 import Education from "./components/Education";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import { ScrollProgress, useCardSpotlight } from "./components/ui";
 
 function App() {
+  useCardSpotlight();
+
   return (
     <ThemeProvider>
       <MotionConfig reducedMotion="user">
         <div className="min-h-screen transition-colors duration-300">
+          <ScrollProgress />
           <Navbar />
           <main>
             <Hero />
