@@ -1,6 +1,6 @@
 import React, { Component, useMemo, useRef } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Float, MeshDistortMaterial, Points, PointMaterial } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Points, PointMaterial } from "@react-three/drei";
 
 // Random points inside a sphere shell, generated once.
 const makeParticles = (count, radius) => {
@@ -50,55 +50,6 @@ const ParticleField = ({ dark }) => {
   );
 };
 
-const Blob = ({ dark }) => {
-  const group = useRef();
-  const { viewport } = useThree();
-  // Sit behind the photo on wide screens, centred and smaller on mobile.
-  const wide = viewport.width > 9;
-  const x = wide ? viewport.width * 0.17 : 0;
-  const scale = wide ? 1.6 : 1.1;
-
-  useFrame((state) => {
-    if (!group.current) return;
-    group.current.rotation.y = state.clock.elapsedTime * 0.15 + state.pointer.x * 0.4;
-    group.current.rotation.x = state.pointer.y * -0.3;
-  });
-
-  return (
-    <group ref={group} position={[x, wide ? 0 : -0.6, -1]} scale={scale}>
-      <Float speed={1.5} rotationIntensity={0.4} floatIntensity={0.8}>
-        {/* The solid blob bulged unevenly from behind the photo on desktop,
-            so there only the wireframe halo is drawn. */}
-        {!wide && (
-          <mesh>
-            <icosahedronGeometry args={[1.2, 32]} />
-            <MeshDistortMaterial
-              color={dark ? "#6d28d9" : "#8b5cf6"}
-              emissive={dark ? "#4c1d95" : "#7c3aed"}
-              emissiveIntensity={dark ? 0.6 : 0.25}
-              roughness={0.25}
-              metalness={0.4}
-              distort={0.42}
-              speed={1.6}
-              transparent
-              opacity={0.35}
-            />
-          </mesh>
-        )}
-        <mesh scale={1.35}>
-          <icosahedronGeometry args={[1.2, 1]} />
-          <meshBasicMaterial
-            color={dark ? "#a78bfa" : "#7c3aed"}
-            wireframe
-            transparent
-            opacity={wide ? (dark ? 0.35 : 0.28) : dark ? 0.25 : 0.18}
-          />
-        </mesh>
-      </Float>
-    </group>
-  );
-};
-
 // If WebGL is unavailable the hero simply renders without the scene.
 class SceneBoundary extends Component {
   state = { failed: false };
@@ -124,7 +75,6 @@ const HeroScene = ({ dark, active, eventSource }) => (
       <directionalLight position={[4, 5, 5]} intensity={1.4} />
       <pointLight position={[-4, -2, 2]} intensity={dark ? 25 : 12} color="#6366f1" />
       <ParticleField dark={dark} />
-      <Blob dark={dark} />
     </Canvas>
   </SceneBoundary>
 );
