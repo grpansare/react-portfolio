@@ -103,7 +103,7 @@ const Hero = () => {
             className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] text-gray-900 dark:text-white"
           >
             Hi, I'm{" "}
-            <span className="animate-gradient bg-[length:200%_auto] bg-gradient-to-r from-violet-600 via-fuchsia-500 to-violet-600 bg-clip-text text-transparent motion-reduce:animate-none dark:from-violet-400 dark:via-fuchsia-300 dark:to-violet-400">
+            <span className="text-violet-700 dark:text-violet-400">
               Ganesh Pansare
             </span>
           </motion.h1>

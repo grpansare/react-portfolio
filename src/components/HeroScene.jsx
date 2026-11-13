@@ -40,7 +40,7 @@ const ParticleField = ({ dark }) => {
     >
       <PointMaterial
         transparent
-        color={dark ? "#a78bfa" : "#7c3aed"}
+        color={dark ? "#60a5fa" : "#2563eb"}
         size={0.035}
         sizeAttenuation
         depthWrite={false}
