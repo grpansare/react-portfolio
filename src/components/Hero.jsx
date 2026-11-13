@@ -84,8 +84,8 @@ const Hero = () => {
         aria-hidden="true"
       />
 
-      <div className="container-max relative grid items-center gap-12 lg:grid-cols-[1.4fr_1fr]">
-        <div>
+      <div className="container-max relative">
+        <div className="max-w-3xl">
           <motion.a
             {...fadeUp(0)}
             href="#experience"
@@ -100,7 +100,7 @@ const Hero = () => {
 
           <motion.h1
             {...fadeUp(0.05)}
-            className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] text-gray-900 dark:text-white"
+            className="mt-6 text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] text-gray-900 dark:text-white"
           >
             Hi, I'm{" "}
             <span className="text-violet-700 dark:text-violet-400">
@@ -180,25 +180,6 @@ const Hero = () => {
             ))}
           </motion.dl>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="mx-auto w-full max-w-xs sm:max-w-sm"
-        >
-          <div className="relative">
-            <div
-              className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-violet-500/40 to-indigo-500/10 blur-xl"
-              aria-hidden="true"
-            />
-            <img
-              src="/profile.jpg"
-              alt="Ganesh Pansare"
-              className="relative aspect-[4/5] w-full rounded-[1.75rem] border border-white/20 object-cover shadow-2xl"
-            />
-          </div>
-        </motion.div>
       </div>
     </section>
   );
