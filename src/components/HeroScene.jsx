@@ -55,7 +55,7 @@ const Blob = ({ dark }) => {
   const { viewport } = useThree();
   // Sit behind the photo on wide screens, centred and smaller on mobile.
   const wide = viewport.width > 9;
-  const x = wide ? viewport.width * 0.19 : 0;
+  const x = wide ? viewport.width * 0.17 : 0;
   const scale = wide ? 1.6 : 1.1;
 
   useFrame((state) => {
@@ -67,27 +67,31 @@ const Blob = ({ dark }) => {
   return (
     <group ref={group} position={[x, wide ? 0 : -0.6, -1]} scale={scale}>
       <Float speed={1.5} rotationIntensity={0.4} floatIntensity={0.8}>
-        <mesh>
-          <icosahedronGeometry args={[1.2, 32]} />
-          <MeshDistortMaterial
-            color={dark ? "#6d28d9" : "#8b5cf6"}
-            emissive={dark ? "#4c1d95" : "#7c3aed"}
-            emissiveIntensity={dark ? 0.6 : 0.25}
-            roughness={0.25}
-            metalness={0.4}
-            distort={0.42}
-            speed={1.6}
-            transparent
-            opacity={wide ? 0.9 : 0.35}
-          />
-        </mesh>
+        {/* The solid blob bulged unevenly from behind the photo on desktop,
+            so there only the wireframe halo is drawn. */}
+        {!wide && (
+          <mesh>
+            <icosahedronGeometry args={[1.2, 32]} />
+            <MeshDistortMaterial
+              color={dark ? "#6d28d9" : "#8b5cf6"}
+              emissive={dark ? "#4c1d95" : "#7c3aed"}
+              emissiveIntensity={dark ? 0.6 : 0.25}
+              roughness={0.25}
+              metalness={0.4}
+              distort={0.42}
+              speed={1.6}
+              transparent
+              opacity={0.35}
+            />
+          </mesh>
+        )}
         <mesh scale={1.35}>
           <icosahedronGeometry args={[1.2, 1]} />
           <meshBasicMaterial
             color={dark ? "#a78bfa" : "#7c3aed"}
             wireframe
             transparent
-            opacity={dark ? 0.25 : 0.18}
+            opacity={wide ? (dark ? 0.35 : 0.28) : dark ? 0.25 : 0.18}
           />
         </mesh>
       </Float>
