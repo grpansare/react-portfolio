@@ -14,6 +14,61 @@ const texts = [
   "Microservices Enthusiast",
 ];
 
+// Code-editor card shown beside the intro on large screens.
+const K = "text-sky-300"; // keys
+const S = "text-emerald-300"; // strings
+const P = "text-gray-500"; // punctuation
+const W = "text-violet-300"; // keywords
+const str = (v) => [S, `"${v}"`];
+const arr = (items) => [
+  [P, "["],
+  ...items.flatMap((v, i) => [str(v), [P, i < items.length - 1 ? ", " : ""]]),
+  [P, "],"],
+];
+const codeLines = [
+  [[W, "const "], ["text-white", "engineer"], [P, " = {"]],
+  [[K, "  name"], [P, ": "], str("Ganesh Pansare"), [P, ","]],
+  [[K, "  role"], [P, ": "], str("Junior Software Engineer"), [P, ","]],
+  [[K, "  company"], [P, ": "], str("humancloud"), [P, ","]],
+  [[K, "  location"], [P, ": "], str("Pune, India"), [P, ","]],
+  [[K, "  stack"], [P, ": {"]],
+  [[K, "    backend"], [P, ": "], ...arr(["Java", "Spring Boot", "NestJS"])],
+  [[K, "    frontend"], [P, ": "], ...arr(["React", "Angular", "Next.js"])],
+  [[K, "    infra"], [P, ": "], ...arr(["Docker", "Kubernetes", "Kafka"])],
+  [[P, "  },"]],
+  [[K, "  exploring"], [P, ": "], str("AI in web apps"), [P, ","]],
+  [[P, "};"]],
+];
+
+const CodeCard = () => (
+  <div className="relative hidden lg:block">
+    <div
+      className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-violet-500/25 to-transparent blur-2xl"
+      aria-hidden="true"
+    />
+    <div className="relative overflow-hidden rounded-2xl border border-gray-800 bg-ink-900 shadow-2xl">
+      <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
+        <span className="h-3 w-3 rounded-full bg-red-400/80" />
+        <span className="h-3 w-3 rounded-full bg-amber-400/80" />
+        <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
+        <span className="ml-3 font-mono text-xs text-gray-400">engineer.ts</span>
+      </div>
+      <pre className="overflow-x-auto p-5 font-mono text-[13px] leading-6" aria-label="Profile summary">
+        {codeLines.map((line, i) => (
+          <div key={i} className="flex">
+            <span className="mr-5 w-5 select-none text-right text-gray-600">{i + 1}</span>
+            <code>
+              {line.map(([cls, text], j) => (
+                <span key={j} className={cls}>{text}</span>
+              ))}
+            </code>
+          </div>
+        ))}
+      </pre>
+    </div>
+  </div>
+);
+
 const Hero = () => {
   const [currentText, setCurrentText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -84,8 +139,8 @@ const Hero = () => {
         aria-hidden="true"
       />
 
-      <div className="container-max relative">
-        <div className="max-w-3xl">
+      <div className="container-max relative grid items-center gap-12 lg:grid-cols-[1.15fr_1fr]">
+        <div>
           <motion.a
             {...fadeUp(0)}
             href="#experience"
@@ -100,7 +155,7 @@ const Hero = () => {
 
           <motion.h1
             {...fadeUp(0.05)}
-            className="mt-6 text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] text-gray-900 dark:text-white"
+            className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] text-gray-900 dark:text-white"
           >
             Hi, I'm{" "}
             <span className="text-violet-700 dark:text-violet-400">
@@ -180,6 +235,10 @@ const Hero = () => {
             ))}
           </motion.dl>
         </div>
+
+        <motion.div {...fadeUp(0.15)}>
+          <CodeCard />
+        </motion.div>
       </div>
     </section>
   );
