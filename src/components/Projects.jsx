@@ -30,9 +30,9 @@ const projects = [
     subtitle: "Parking Booking System",
     description:
       "Real-time slot booking with map-based search, JWT & Google OAuth, Razorpay payments, and role-based dashboards for users, owners and admins.",
-    image: "",
+    image: "/projects/smartparking.jpg",
     technologies: ["React.js", "Spring Boot", "MySQL", "Leaflet", "Razorpay"],
-    liveUrl: "",
+    liveUrl: "https://parkeasein.netlify.app/",
     githubUrl: "https://github.com/grpansare/smart_car_parking",
   },
   {
