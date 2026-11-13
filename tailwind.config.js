@@ -49,8 +49,13 @@ export default {
         'fade-in': 'fadeIn 0.5s ease-in-out',
         'slide-up': 'slideUp 0.5s ease-out',
         'gradient': 'gradient 6s linear infinite',
+        'marquee': 'marquee 40s linear infinite',
       },
       keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
         gradient: {
           '0%': { backgroundPosition: '0% center' },
           '100%': { backgroundPosition: '200% center' },
