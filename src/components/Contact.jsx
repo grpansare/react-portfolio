@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle2 } from "lucide-react";
 import { contact } from "../data/profile";
 import { Reveal, SectionHeader } from "./ui";
 
@@ -96,6 +96,31 @@ const Contact = () => {
           </Reveal>
 
           <Reveal delay={0.06} className="card p-6 sm:p-8">
+            {status === "sent" ? (
+              <div
+                className="flex h-full min-h-[22rem] flex-col items-center justify-center text-center"
+                role="status"
+                aria-live="polite"
+              >
+                <span className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 dark:bg-emerald-400/10 dark:text-emerald-400">
+                  <CheckCircle2 size={34} />
+                </span>
+                <h3 className="mt-5 text-2xl font-bold text-gray-900 dark:text-white">
+                  Message sent!
+                </h3>
+                <p className="mt-2 max-w-sm text-gray-600 dark:text-gray-400">
+                  Thanks for reaching out. I&apos;ve received your message and will
+                  get back to you within a day or two.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setStatus("idle")}
+                  className="btn-outline mt-6"
+                >
+                  Send another message
+                </button>
+              </div>
+            ) : (
             <form
               name="contact"
               method="POST"
@@ -179,11 +204,6 @@ const Contact = () => {
                 {status === "sending" ? "Sending..." : "Send Message"}
               </button>
               <p className="text-center text-sm" role="status" aria-live="polite">
-                {status === "sent" && (
-                  <span className="text-emerald-700 dark:text-emerald-400">
-                    Thanks! Your message has been sent. I'll reply soon.
-                  </span>
-                )}
                 {status === "error" && (
                   <span className="text-red-600 dark:text-red-400">
                     Something went wrong. Please email me at{" "}
@@ -198,6 +218,7 @@ const Contact = () => {
                 )}
               </p>
             </form>
+            )}
           </Reveal>
         </div>
       </div>
