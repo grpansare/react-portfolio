@@ -12,7 +12,8 @@ const Contact = () => {
     email: "",
     message: "",
   });
-  const [sent, setSent] = useState(false);
+  // idle | sending | sent | error
+  const [status, setStatus] = useState("idle");
 
   const handleChange = (e) => {
     setFormData({
@@ -21,16 +22,22 @@ const Contact = () => {
     });
   };
 
-  // No backend: open the visitor's mail client with the message pre-filled.
-  const handleSubmit = (e) => {
+  // Submitted to Netlify Forms (form "contact" is declared statically in index.html).
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const subject = `Portfolio enquiry from ${formData.name}`;
-    const body = `${formData.message}\n\n${formData.name}\n${formData.email}`;
-    window.location.href = `mailto:${contact.email}?subject=${encodeURIComponent(
-      subject
-    )}&body=${encodeURIComponent(body)}`;
-    setSent(true);
-    setFormData({ name: "", email: "", message: "" });
+    setStatus("sending");
+    try {
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(new FormData(e.target)).toString(),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      setStatus("sent");
+      setFormData({ name: "", email: "", message: "" });
+    } catch {
+      setStatus("error");
+    }
   };
 
   const contactInfo = [
@@ -89,7 +96,20 @@ const Contact = () => {
           </Reveal>
 
           <Reveal delay={0.06} className="card p-6 sm:p-8">
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form
+              name="contact"
+              method="POST"
+              data-netlify="true"
+              netlify-honeypot="bot-field"
+              onSubmit={handleSubmit}
+              className="space-y-5"
+            >
+              <input type="hidden" name="form-name" value="contact" />
+              <p className="hidden">
+                <label>
+                  Leave this empty: <input name="bot-field" tabIndex={-1} autoComplete="off" />
+                </label>
+              </p>
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
                   <label
@@ -150,23 +170,33 @@ const Contact = () => {
                 />
               </div>
 
-              <button type="submit" className="btn-primary w-full">
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                className="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-70"
+              >
                 <Send size={18} />
-                Send Message
+                {status === "sending" ? "Sending..." : "Send Message"}
               </button>
-              {sent && (
-                <p className="text-center text-sm text-gray-600 dark:text-gray-300" role="status">
-                  Your email app should open with the message ready to send. If
-                  it doesn't, write to{" "}
-                  <a
-                    href={`mailto:${contact.email}`}
-                    className="text-violet-700 underline dark:text-violet-300"
-                  >
-                    {contact.email}
-                  </a>
-                  .
-                </p>
-              )}
+              <p className="text-center text-sm" role="status" aria-live="polite">
+                {status === "sent" && (
+                  <span className="text-emerald-700 dark:text-emerald-400">
+                    Thanks! Your message has been sent. I'll reply soon.
+                  </span>
+                )}
+                {status === "error" && (
+                  <span className="text-red-600 dark:text-red-400">
+                    Something went wrong. Please email me at{" "}
+                    <a
+                      href={`mailto:${contact.email}`}
+                      className="underline"
+                    >
+                      {contact.email}
+                    </a>
+                    .
+                  </span>
+                )}
+              </p>
             </form>
           </Reveal>
         </div>
