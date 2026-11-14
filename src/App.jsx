@@ -8,6 +8,7 @@ import Experience from "./components/Experience";
 import Projects from "./components/Projects";
 import Skills from "./components/Skills";
 import Education from "./components/Education";
+import Services from "./components/Services";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import { ScrollProgress, useCardSpotlight } from "./components/ui";
@@ -28,6 +29,7 @@ function App() {
             <Projects />
             <Skills />
             <Education />
+            <Services />
             <Contact />
           </main>
           <Footer />
