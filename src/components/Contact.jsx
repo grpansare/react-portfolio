@@ -62,10 +62,10 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="section-padding section-base">
+    <section id="contact" className="section-padding section-alt">
       <div className="container-max">
         <SectionHeader
-          index="06"
+          index="07"
           title="Contact"
           subtitle="Open to full-stack and backend opportunities, collaborations, or just a chat about tech."
         />
