@@ -79,7 +79,13 @@ export const education = [
   {
     degree: "Master of Computer Applications (MCA)",
     school: "MES' Institute of Management & Career Courses (IMCC), Pune",
-    period: "2024 – 2026",
+    period: "Aug 2024 – Apr 2026",
+  },
+  {
+    degree: "B.Sc. Computer Science",
+    school: "Yashwantrao Mohite College, Pune",
+    period: "2020 – 2023",
+    grade: "SGPA 8.42",
   },
 ];
 

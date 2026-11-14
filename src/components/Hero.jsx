@@ -4,7 +4,7 @@ import { ArrowRight, Github, Linkedin, Mail, Download } from "lucide-react";
 import { contact, stats } from "../data/profile";
 import { useTheme } from "../context/ThemeContext";
 
-// three.js is large; load it after first paint so the page appears instantly.
+// Background particles load after first paint so the page appears instantly.
 const HeroScene = lazy(() => import("./HeroScene"));
 
 const texts = [

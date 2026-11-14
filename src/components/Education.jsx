@@ -9,8 +9,9 @@ const Education = () => (
       <SectionHeader index="05" title="Education" />
 
       <div className="grid gap-6 lg:grid-cols-[1fr_2fr]">
-        {education.map((edu) => (
-          <Reveal key={edu.degree} className="card p-6 sm:p-7">
+        <div className="space-y-6">
+        {education.map((edu, i) => (
+          <Reveal key={edu.degree} delay={i * 0.06} className="card p-6 sm:p-7">
             <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-violet-100 text-violet-700 dark:bg-violet-400/10 dark:text-violet-300">
               <GraduationCap size={22} />
             </div>
@@ -20,9 +21,11 @@ const Education = () => (
             <p className="mt-2 text-gray-600 dark:text-gray-400">{edu.school}</p>
             <p className="mt-3 font-mono text-sm text-violet-700 dark:text-violet-300">
               {edu.period}
+              {edu.grade && <span className="text-gray-500 dark:text-gray-400"> · {edu.grade}</span>}
             </p>
           </Reveal>
         ))}
+        </div>
 
         <Reveal delay={0.06} className="card p-6 sm:p-7">
           <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
