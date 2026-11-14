@@ -1,111 +1,171 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
+import React, { useState } from "react";
+import { Code2, LayoutTemplate, Server, ShieldCheck, Database, Container } from "lucide-react";
+import { Reveal, SectionHeader, TiltCard } from "./ui";
 
-const Skills = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
+// Logos come from devicon (pinned version). Skills without a logo get a dot.
+const DEVICON = "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons";
+const logo = (slug) => `${DEVICON}/${slug}/${slug}-original.svg`;
 
-  const skillCategories = [
-    {
-      title: "Frontend",
-      skills: [
-        { name: "React", level: 90 },
-        { name: "JavaScript", level: 85 },
-        { name: "TypeScript", level: 80 },
-        { name: "CSS/SASS", level: 85 },
-        { name: "Tailwind CSS", level: 90 },
-      ],
-    },
-    {
-      title: "Backend",
-      skills: [
-        { name: "Node.js", level: 85 },
-        { name: "Express", level: 80 },
-        { name: "Python", level: 75 },
-        { name: "PostgreSQL", level: 80 },
-        { name: "MongoDB", level: 85 },
-      ],
-    },
-    {
-      title: "Tools & Others",
-      skills: [
-        { name: "Git", level: 90 },
-        { name: "Docker", level: 70 },
-        { name: "AWS", level: 75 },
-        { name: "Figma", level: 80 },
-        { name: "Jest", level: 75 },
-      ],
-    },
-  ];
+// Black logos that disappear on the dark background.
+const INVERT_DARK = new Set(["nextjs", "express", "apachekafka", "githubactions"]);
 
+const skillCategories = [
+  {
+    title: "Languages",
+    icon: Code2,
+    skills: [
+      ["Java", "java"],
+      ["JavaScript", "javascript"],
+      ["TypeScript", "typescript"],
+      ["Python", "python"],
+      ["SQL", "azuresqldatabase"],
+    ],
+  },
+  {
+    title: "Frontend",
+    icon: LayoutTemplate,
+    skills: [
+      ["React", "react"],
+      ["Angular", "angular"],
+      ["Redux", "redux"],
+      ["Next.js", "nextjs"],
+      ["Tailwind CSS", "tailwindcss"],
+      ["HTML & CSS", "html5"],
+    ],
+  },
+  {
+    title: "Backend",
+    icon: Server,
+    skills: [
+      ["Spring Boot", "spring"],
+      ["Spring Security", "spring"],
+      ["Spring Cloud", "spring"],
+      ["Node.js", "nodejs"],
+      ["Express.js", "express"],
+      ["REST APIs"],
+      ["Kafka", "apachekafka"],
+    ],
+  },
+  {
+    title: "Auth & Payments",
+    icon: ShieldCheck,
+    skills: [["JWT"], ["OAuth 2.0", "oauth"], ["Keycloak"], ["Razorpay"]],
+  },
+  {
+    title: "Databases",
+    icon: Database,
+    skills: [
+      ["MySQL", "mysql"],
+      ["PostgreSQL", "postgresql"],
+      ["MongoDB", "mongodb"],
+    ],
+  },
+  {
+    title: "DevOps & Tools",
+    icon: Container,
+    skills: [
+      ["Docker", "docker"],
+      ["Kubernetes", "kubernetes"],
+      ["ArgoCD", "argocd"],
+      ["GitHub Actions", "githubactions"],
+      ["Git & GitHub", "git"],
+    ],
+  },
+];
+
+// One logo per technology for the scrolling strip.
+const marqueeItems = [
+  ...new Map(
+    skillCategories
+      .flatMap((c) => c.skills)
+      .filter(([, slug]) => slug && slug !== "azuresqldatabase" && slug !== "oauth")
+      .map(([name, slug]) => [slug, [slug === "spring" ? "Spring" : name, slug]])
+  ).values(),
+];
+
+const SkillLogo = ({ slug, className = "h-5 w-5" }) => {
+  const [failed, setFailed] = useState(false);
+  if (!slug || failed) {
+    return <span className="h-1.5 w-1.5 rounded-full bg-violet-500" aria-hidden="true" />;
+  }
   return (
-    <section
-      id="skills"
-      className="section-padding bg-gray-50 dark:bg-black transition-colors duration-300"
-    >
-      <div className="container-max">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">
-            Skills & Technologies
-          </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto px-4">
-            I'm constantly learning and improving my skills. Here's what I'm
-            currently working with.
-          </p>
-        </motion.div>
-
-        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {skillCategories.map((category, categoryIndex) => (
-            <motion.div
-              key={categoryIndex}
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: categoryIndex * 0.2 }}
-              className="bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-xl shadow-lg"
-            >
-              <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-900 dark:text-white mb-4 sm:mb-6 text-center">
-                {category.title}
-              </h3>
-              <div className="space-y-3 sm:space-y-4">
-                {category.skills.map((skill, skillIndex) => (
-                  <div key={skillIndex}>
-                    <div className="flex justify-between mb-2">
-                      <span className="text-sm sm:text-base text-gray-700 dark:text-gray-300 font-medium">
-                        {skill.name}
-                      </span>
-                      <span className="text-sm sm:text-base text-gray-500 dark:text-gray-400">
-                        {skill.level}%
-                      </span>
-                    </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={inView ? { width: `${skill.level}%` } : {}}
-                        transition={{
-                          duration: 1,
-                          delay: categoryIndex * 0.2 + skillIndex * 0.1,
-                        }}
-                        className="bg-violet-600 dark:bg-violet-500 h-2 rounded-full"
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
+    <img
+      src={logo(slug)}
+      alt=""
+      loading="lazy"
+      onError={() => setFailed(true)}
+      className={`${className} ${INVERT_DARK.has(slug) ? "dark:invert" : ""}`}
+    />
   );
 };
+
+const Marquee = () => (
+  <div
+    className="relative mb-10 overflow-hidden py-2 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
+    aria-hidden="true"
+  >
+    <div className="flex w-max animate-marquee motion-reduce:animate-none">
+      {[...marqueeItems, ...marqueeItems].map(([name, slug], i) => (
+        <div
+          key={i}
+          className="flex items-center gap-2.5 pr-10 text-sm font-medium text-gray-500 grayscale transition hover:text-gray-900 hover:grayscale-0 dark:text-gray-400 dark:hover:text-white"
+        >
+          <SkillLogo slug={slug} className="h-7 w-7" />
+          {name}
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+const Skills = () => (
+  <section id="skills" className="section-padding section-base">
+    <div className="container-max">
+      <SectionHeader
+        index="04"
+        title="Skills"
+        subtitle="The stack I use at work and in my projects."
+      />
+
+      <Marquee />
+
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {skillCategories.map((category, index) => {
+          const Icon = category.icon;
+          return (
+            <Reveal key={category.title} delay={(index % 3) * 0.06}>
+              <TiltCard max={5} className="card group h-full p-6">
+                <div className="mb-5 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-50 text-violet-600 ring-1 ring-violet-100 transition-colors group-hover:bg-violet-600 group-hover:text-white dark:bg-violet-400/10 dark:text-violet-300 dark:ring-violet-400/20">
+                      <Icon size={20} />
+                    </span>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      {category.title}
+                    </h3>
+                  </div>
+                  <span className="font-mono text-xs text-gray-400">
+                    {String(category.skills.length).padStart(2, "0")}
+                  </span>
+                </div>
+                <ul className="flex flex-wrap gap-2">
+                  {category.skills.map(([name, slug]) => (
+                    <li
+                      key={name}
+                      className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm font-medium text-gray-800 shadow-sm transition hover:-translate-y-0.5 hover:border-violet-400 hover:shadow-md dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:hover:border-violet-400/60"
+                    >
+                      <SkillLogo slug={slug} className="h-4 w-4" />
+                      {name}
+                    </li>
+                  ))}
+                </ul>
+              </TiltCard>
+            </Reveal>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+);
 
 export default Skills;
